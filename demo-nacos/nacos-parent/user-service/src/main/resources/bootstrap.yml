@@ -1,0 +1,15 @@
+spring:
+  application:
+    # 服务名，对应在nacos中进行配置管理的data id的服务名
+    name: userservice
+  profiles:
+    # 环境，对应在nacos中进行配置管理的data id的环境
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # nacos服务器地址，需要知道去哪里拉取配置信息
+        server-addr: localhost:8848
+      config:
+        # 文件后缀，对应在nacos中进行配置管理的data id的后缀名
+        file-extension: yaml

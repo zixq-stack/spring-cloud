@@ -1,0 +1,32 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud_user?useSSL=false
+    username: root
+    password: "zixieqing072413"
+    driver-class-name: com.mysql.jdbc.Driver
+  # 放到nacos的同一配置管理中配置了
+#  application:
+#    name: USER-SERVICE
+# 放到nacos的同一配置管理中配置了
+#  cloud:
+#    nacos:
+#      # Nacos服务器地址，本地启动的Nacos
+#      server-addr: localhost:8848
+#      # 配置集群名称，如：HZ，杭州T
+#      cluster-name: CQ
+mybatis:
+  type-aliases-package: com.zixieqing.user.entity
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.zixieqing: debug
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+#eureka:
+#  client:
+#    # 去哪里拉取服务列表
+#    service-url:
+#      defaultZone: http://localhost:10086/eureka

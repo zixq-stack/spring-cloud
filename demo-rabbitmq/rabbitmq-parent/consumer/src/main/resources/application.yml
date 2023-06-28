@@ -1,0 +1,15 @@
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+spring:
+  rabbitmq:
+    host: 192.168.46.128
+    port: 5672
+    username: "zixieqing"
+    password: "072413"
+    # 要是mq设置的有独立的虚拟机空间，则在此处设置虚拟机
+#    virtual-host: /
+    listener:
+      simple:
+        # 不公平分发，预取值 消费者每次从队列获取的消息数量 默认一次250个  通过查看后台管理器中queue的unacked数量
+        prefetch: 1

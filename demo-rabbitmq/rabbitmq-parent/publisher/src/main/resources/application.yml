@@ -1,0 +1,24 @@
+logging:
+  pattern:
+    dateformat: MM-dd HH:mm:ss:SSS
+spring:
+  rabbitmq:
+    host: 192.168.46.128
+    port: 5672
+    username: "zixieqing"
+    password: "072413"
+#     要是mq设置的有独立的虚拟机空间，则在此处设置虚拟机
+#    virtual-host: /
+#     生产者开启 return 确认机制   如果消息未能投递到目标queue中，触发returnCallback
+    publisher-returns: true
+#     发布确认类型  生产者开启 confirm 确认机制(等价于旧版本的publisher-confirms=true)
+#     有3种属性配置   correlated    none    simple
+#         none  禁用发布确认模式，是默认值
+#         correlated  异步回调  发布消息成功到exchange后会触发 rabbitTemplate.setConfirmCallback 回调方法
+#         simple 同步等待confirm结果，直到超时
+    publisher-confirm-type: correlated
+    template:
+#       消息路由失败策略
+#         true：调用ReturnCallback
+#         false：直接丢弃消息
+      mandatory: true

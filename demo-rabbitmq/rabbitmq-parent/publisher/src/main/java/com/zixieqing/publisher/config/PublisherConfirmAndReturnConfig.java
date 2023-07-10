@@ -50,6 +50,8 @@ public class PublisherConfirmAndReturnConfig implements RabbitTemplate.ConfirmCa
     }
 
     /**
+     * return要全局唯一，rabbitTemplate中只有一个returnCallback
+     *
      * 保证 spring.rabbitmq.template.mandatory = true 的前提下，如果消息未能投递到目标queue中，
      *      触发returnCallback#returnedMessage
      * 参数1、消息 new String(message.getBody())

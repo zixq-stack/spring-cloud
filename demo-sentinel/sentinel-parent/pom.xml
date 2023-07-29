@@ -14,7 +14,6 @@
         <module>gateway</module>
     </modules>
 
-
     <packaging>pom</packaging>
 
     <parent>
@@ -71,5 +70,4 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
-
 </project>

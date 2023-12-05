@@ -42,17 +42,21 @@ public class AccountTccServiceImpl implements AccountTccService {
         String xid = RootContext.getXID();
         AccountFreeze accountFreeze = accountFreezeMapper.selectById(xid);
         // 业务悬挂处理：判断cancel是否已经执行，若执行过则free表中肯定有数据
-        if (accountFreeze == null) {
-            // 进行扣款
-            accountMapper.deduct(userId, money);
-            // 记录本次状态
-            AccountFreeze freeze = new AccountFreeze();
-            freeze.setXid(xid)
-                    .setUserId(userId)
-                    .setFreezeMoney(money)
-                    .setState(AccountFreeze.State.TRY);
-            accountFreezeMapper.insert(freeze);
+        if (accountFreeze != null) {
+            // CANCEL执行过，拒绝业务
+            return;
         }
+
+        // 进行扣款
+        accountMapper.deduct(userId, money);
+        // 记录本次状态
+        AccountFreeze freeze = new AccountFreeze();
+        freeze.setXid(xid)
+                .setUserId(userId)
+                .setFreezeMoney(money)
+                .setState(AccountFreeze.State.TRY);
+
+        accountFreezeMapper.insert(freeze);
     }
 
     /**
@@ -88,7 +92,8 @@ public class AccountTccServiceImpl implements AccountTccService {
                     .setUserId(context.getActionContext("userId").toString())
                     .setFreezeMoney(0)
                     .setState(AccountFreeze.State.CANCEL);
-            return accountFreezeMapper.updateById(freeze) == 1;
+
+            return accountFreezeMapper.insert(freeze) == 1;
         }
 
         // 幂等性处理
@@ -102,6 +107,7 @@ public class AccountTccServiceImpl implements AccountTccService {
         // 将冻结金额归0，并修改本次状态
         freeze.setFreezeMoney(0)
                 .setState(AccountFreeze.State.CANCEL);
+
         return accountFreezeMapper.updateById(freeze) == 1;
     }
 }
